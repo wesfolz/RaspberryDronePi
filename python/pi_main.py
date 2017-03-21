@@ -23,7 +23,7 @@ class Main:
 			#command should be in the form of 'method,argument'
 			tokens = command.split[',']
 			#get 'method' attr frome drone, pass in 'argument'
-			getattr(self.drone, tokens[0])(tokens[1])
+			getattr(self.drone, tokens[0])(int(tokens[1]))
 		except (KeyError, IndexError, AttributeError):
 			return False
 
