@@ -59,7 +59,7 @@ class PiDrone:
 		self.vehicle.channels.overrides[PiDrone.ROLL] = value
 
 	def fcSetPitch(self, value=0):
-		self.vehicle.channels.overrides[PiDrone.YAW] = value
+		self.vehicle.channels.overrides[PiDrone.PITCH] = value
 
 	def fcSetYaw(self, value=0):
 		self.vehicle.channels.overrides[PiDrone.YAW] = value
