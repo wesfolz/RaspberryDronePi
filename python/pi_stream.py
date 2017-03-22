@@ -3,7 +3,7 @@ from flask import Flask, render_template, Response
 from time import sleep
 
 # emulated camera
-from camera import Camera
+from camera_pi import Camera
 
 # Raspberry Pi camera module (requires picamera package)
 # from camera_pi import Camera
