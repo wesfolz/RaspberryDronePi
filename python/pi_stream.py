@@ -20,11 +20,11 @@ def gen(camera):
     """Video streaming generator function."""
     index = 0
     while True:
-        frame = camera.get_frame(index)
+        frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-        index += 1
-        sleep(0.03)
+    index += 1
+    sleep(0.03)
 
 
 @app.route('/video_feed')

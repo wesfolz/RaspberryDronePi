@@ -13,7 +13,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         print("Socket opened.")
  
     def on_message(self, message):
-        self.write_message(u"Your message was: " + message)
+        self.write_message("Your message was: " + message)
         print("Received message: " + message)
         WebSocketHandler.callback(self, message)
 

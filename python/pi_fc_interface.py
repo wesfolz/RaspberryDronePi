@@ -7,7 +7,10 @@ class PiDrone:
 	ROLL = '1'
 	PITCH = '2'
 	YAW = '4'
-
+	
+	def test(self):
+		print 'value' 
+	
 	def fcConnect(self):
 		self.vehicle = connect('/dev/ttyACM0', wait_ready=True)
 	
