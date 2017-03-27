@@ -8,11 +8,13 @@ class PiDrone:
 	PITCH = '2'
 	YAW = '4'
 	
-	def test(self):
-		print 'value' 
+	def test(self, value):
+		print value
+		return True
 	
 	def fcConnect(self):
 		self.vehicle = connect('/dev/ttyACM0', wait_ready=True)
+		return self.vehicle is not None		
 	
 	def fcInfo(self):
 		print "Autopilot Firmware version: %s" % vehicle.version
@@ -48,12 +50,17 @@ class PiDrone:
 		self.vehicle.mode = VehicleMode('STABILIZE')
 		self.vehicle.armed = True
 
-		while not self.vehicle.armed:
+		for x in xrange(100):
+			if self.vehicle.armed:
+				break
 			print 'Trying to arm...\n'
 			time.sleep(1)
 
+		return self.vehicle.armed
+
 	def fcDisarm(self):
 		self.vehicle.armed = False
+		return ~self.vehicle.armed
 
 	def fcSetThrottle(self, value=1000):
 		self.vehicle.channels.overrides[PiDrone.THROTTLE] = value

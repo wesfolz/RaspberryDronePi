@@ -24,7 +24,7 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
     index += 1
-    sleep(0.03)
+
 
 
 @app.route('/video_feed')

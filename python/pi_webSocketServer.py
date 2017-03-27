@@ -7,15 +7,15 @@ from pi_stream import StreamInterface
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     @staticmethod
     def callback(arg1, arg2):
-        pass
+        return ''
 
     def open(self):
         print("Socket opened.")
  
     def on_message(self, message):
-        self.write_message("Your message was: " + message)
+        #self.write_message("Your message was: " + message)
         print("Received message: " + message)
-        WebSocketHandler.callback(self, message)
+        self.write_message(str(WebSocketHandler.callback(self, message)))
 
     def on_close(self):
         print("Socket closed.")

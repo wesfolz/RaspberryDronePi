@@ -26,15 +26,15 @@ class Main:
 			print tokens
 			#get 'method' attr frome drone, pass in 'argument'
 			if len(tokens) == 1:
-				getattr(self.drone, tokens[0])()
+				result = getattr(self.drone, tokens[0])()
 			else:
-				getattr(self.drone, tokens[0])(int(tokens[1]))
+				result = getattr(self.drone, tokens[0])(float(tokens[1]))
 		except (KeyError, IndexError, AttributeError):
 			print 'exception'
-			return False
+			return 'Failed'
 
 		print 'found method'
-		return True
+		return result
 
 if __name__ == '__main__':
 	Main()
