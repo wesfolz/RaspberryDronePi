@@ -24,8 +24,8 @@ class PiDrone:
 		return ''
 	
 	def fcConnect(self):
-		print 'fcConnect'
-		self.vehicle = connect('/dev/ttyACM0', wait_ready=True)
+		if self.vehicle is None:
+			self.vehicle = connect('/dev/ttyACM0', wait_ready=True)
 		return 'connected' if self.vehicle is not None else 'disconnected'		
 	
 	def fcInfo(self):
@@ -75,7 +75,7 @@ class PiDrone:
 		for x in xrange(100):
 			if ~self.vehicle.armed:
 				break
-			print 'Disarming...'
+			print 'Disarming...\n'
 			time.sleep(1)
 		
 		return 'armed' if self.vehicle.armed else 'disarmed'
