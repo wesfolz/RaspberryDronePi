@@ -6,34 +6,41 @@ from pi_fc_interface import PiDrone
 
 class Main:
 	def __init__(self):
-		websocketThread = threading.Thread(target=self.websocket_thread)
+		websocketThread = threading.Thread(target=self.websocketThread)
 		websocketThread.start()
-		#streamThread = threading.Thread(target=self.stream_thread)
-		#streamThread.start()
+		self.streamThread = threading.Thread(target=self.streamThread)
+		#self.streamThread.start()
 		self.drone = PiDrone()
 
-	def stream_thread(self):
-		stream = StreamInterface()
+	def startStream(self):
+		self.streamThread.start()
+		return 'streaming'
 
-	def websocket_thread(self):
-		websocket = WebSocketInterface(self.translate_command)
+	def streamThread(self):
+		self.stream = StreamInterface()
 
-	def translate_command(self, callerRef, command):
+	def websocketThread(self):
+		websocket = WebSocketInterface(self.translateCommand)
+
+	def translateCommand(self, callerRef, command):
 		print 'translate command ' + command
 		try:
 			#command should be in the form of 'method,argument'
 			tokens = command.split(',')
 			print tokens
+			attrOwner = self.drone
+			if hasattr(self, tokens[0]):
+				attrOwner = self
 			#get 'method' attr frome drone, pass in 'argument'
 			if len(tokens) == 1:
-				result = getattr(self.drone, tokens[0])()
+				result = getattr(attrOwner, tokens[0])()
 			else:
-				result = getattr(self.drone, tokens[0])(float(tokens[1]))
+				result = getattr(attrOwner, tokens[0])(float(tokens[1]))
 		except (KeyError, IndexError, AttributeError):
 			print 'exception'
 			return 'Failed'
 
-		print 'found method'
+		print 'found method ' + result
 		return result
 
 if __name__ == '__main__':

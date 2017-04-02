@@ -11,11 +11,15 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         print("Socket opened.")
+	self.write_message('socketOpened')
  
     def on_message(self, message):
         #self.write_message("Your message was: " + message)
         print("Received message: " + message)
-        self.write_message(str(WebSocketHandler.callback(self, message)))
+	reply = str(WebSocketHandler.callback(self, message))
+	if reply:
+		print 'reply ' + reply 
+        	self.write_message(reply)
 
     def on_close(self):
         print("Socket closed.")
