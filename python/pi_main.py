@@ -1,4 +1,5 @@
 import threading
+from subprocess import Popen, PIPE
 
 from pi_webSocketServer import WebSocketInterface
 from pi_stream import StreamInterface
@@ -12,6 +13,11 @@ class Main:
 		#self.streamThread.start()
 		self.drone = PiDrone()
 
+	def shutdownPi(self):
+		command = '/usr/bin/sudo /sbin/shutdown -h now'
+		Popen(command.split(), stdout=PIPE)
+		
+	
 	def startStream(self):
 		self.streamThread.start()
 		return 'streaming'
@@ -36,8 +42,8 @@ class Main:
 				result = getattr(attrOwner, tokens[0])()
 			else:
 				result = getattr(attrOwner, tokens[0])(float(tokens[1]))
-		except (KeyError, IndexError, AttributeError):
-			print 'exception'
+		except (KeyError, IndexError, AttributeError) as e:
+			print 'exception ' + str(e)
 			return 'Failed'
 
 		print 'found method ' + result
